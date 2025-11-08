@@ -16,7 +16,7 @@ public class ValidacoesTutor implements ValidacaoSolicitacaoAdocao {
     private AdocaoRepository adocaoRepository;
 
     public void validar(SolicitacaoAdocaoDto dto) {
-        List<Adocao> adocoes = adocaoRepository.findAll();
+        List<Adocao> adocoes = adocaoRepository.findAllByIdTutor(dto.idTutor());
         for (Adocao a : adocoes) {
             if (a.getTutor().getId().equals(dto.idTutor()) && a.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO) {
                 throw new ValidacaoException("Tutor já possui outra adoção aguardando avaliação!");

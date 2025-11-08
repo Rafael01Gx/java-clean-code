@@ -20,17 +20,11 @@ public class ValidacoesPet implements ValidacaoSolicitacaoAdocao{
     private AdocaoRepository adocaoRepository;
 
     public void validar(SolicitacaoAdocaoDto dto)  {
-        List<Adocao> adocoes = adocaoRepository.findAll();
-        Pet pet = petRepository.getReferenceById(dto.idPet());
-        if (pet.getAdotado()) {
-            throw new ValidacaoException("Pet já foi adotado!");
-        }
-
-        for (Adocao a : adocoes) {
-            if (a.getPet() == pet && a.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO) {
-                throw new ValidacaoException("Pet já está aguardando avaliação para ser adotado!");
+        Boolean isExists = adocaoRepository.existsByPetIdAndStatusOrStatus(dto.idPet(),StatusAdocao.APROVADO,StatusAdocao.AGUARDANDO_AVALIACAO);
+            if (isExists) {
+                throw new ValidacaoException("Pet indisponível para adoção!");
             }
-        }
+
     }
 
 }
