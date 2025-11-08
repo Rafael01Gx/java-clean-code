@@ -16,11 +16,11 @@ public class Adocao {
     private LocalDateTime data;
 
     //@JsonBackReference("tutor_adocoes")
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     private Tutor tutor;
 
     //@JsonManagedReference("adocao_pets")
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private Pet pet;
 
     private String motivo;
